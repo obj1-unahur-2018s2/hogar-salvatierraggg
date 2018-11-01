@@ -1,0 +1,11 @@
+
+describe "establecer Objetos" {
+	
+	const d1=new Dormitorio()
+
+	test "testX" {
+
+		assert.that(true)
+
+	}
+}
