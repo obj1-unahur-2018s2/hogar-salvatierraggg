@@ -1,11 +1,68 @@
-
+import casa.*
+import familia.*
+import habitaciones.*
 describe "establecer Objetos" {
 	
-	const d1=new Dormitorio()
+	const d1=new Dormitorio(metrosCuadrados=10)
+	const d2=new Dormitorio(metrosCuadrados=10)
+	const d3=new Dormitorio(metrosCuadrados=10)
+	const c1=new Cocina(metrosCuadrados=10)
+	const b1=new Banio(metrosCuadrados=10)
+	const b2=new Banio(metrosCuadrados=10)
+	const ug1=new UsoGeneral(metrosCuadrados=10)
+	const ug2=new UsoGeneral(metrosCuadrados=10)
+	
+	const griffind=new Familia()
+	
+	const h1=new Hogar()
+	
+	const hijo1=new Persona(edad=11,sabeCocinar=false,habitacionActual=null)
+	const hijo2=new Persona(edad=13,sabeCocinar=false,habitacionActual=null)
+	const hijo3=new Persona(edad=17,sabeCocinar=true,habitacionActual=null)
+	const bebe=new Persona(edad=2,sabeCocinar=false,habitacionActual=null)
+	const madre=new Persona(edad=42,sabeCocinar=true,habitacionActual=null)
+	const padre=new Persona(edad=40,sabeCocinar=true,habitacionActual=null)
 
-	test "testX" {
-
-		assert.that(true)
-
+	
+	
+	test "duenios" {
+		d1.agregarDuenio(hijo1)
+		d1.agregarDuenio(hijo2)
+		d2.agregarDuenio(hijo3)
+		d3.agregarDuenio(bebe)
+		d3.agregarDuenio(padre)
+		d3.agregarDuenio(madre)
+		
+		assert.equals(2,d1.duenio().size())
+		assert.equals(1,d2.duenio().size())
+		assert.equals(3,d3.duenio().size())
+	}
+	
+	test "moverse a una habitacion"{
+		padre.entrarHabitacion(b1)
+		madre.entrarHabitacion(c1)
+		hijo1.entrarHabitacion(d3)
+		hijo2.entrarHabitacion(d2)
+		hijo3.entrarHabitacion(d1)
+		bebe.entrarHabitacion(b2)
+		
+		assert.equals(1,b1.ocupantes().size())
+		assert.equals(b1,padre.habitacionActual())
+		assert.equals(c1,madre.habitacionActual())
+		assert.equals(d3,hijo1.habitacionActual())
+		assert.equals(d2,hijo2.habitacionActual())
+		assert.equals(d1,hijo3.habitacionActual())
+		assert.equals(b2,bebe.habitacionActual())
+	}
+	
+	test "moverse en el hogar"{
+		
+		padre.entrarHabitacion(b1)
+		bebe.entrarHabitacion(b2)
+		padre.entrarHabitacion(b2)
+		
+		assert.equals(0,b1.ocupantes().size())
+		assert.equals(b2,padre.habitacionActual())
+		assert.equals(2,b2.ocupantes().size())
 	}
 }
